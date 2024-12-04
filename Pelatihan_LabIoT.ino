@@ -1,13 +1,13 @@
-#define BLYNK_TEMPLATE_ID ""
-#define BLYNK_TEMPLATE_NAME ""
-#define BLYNK_AUTH_TOKEN ""
+#define BLYNK_TEMPLATE_ID "Your_Template_ID"
+#define BLYNK_TEMPLATE_NAME "Your_Template_Name"
+#define BLYNK_AUTH_TOKEN "Your_Auth_Token"
 
 #include <WiFi.h>
 #include <BlynkSimpleEsp32.h>
 
 // WiFi credentials
-const char* ssid = "";
-const char* password = "";
+const char* ssid = "Your_ssid";
+const char* password = "Your_Password";
 
 #define POT_PIN 34
 #define LED_PIN 25
