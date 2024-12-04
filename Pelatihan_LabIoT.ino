@@ -1,18 +1,19 @@
-#define BLYNK_TEMPLATE_ID "TMPL6g5n5SucM"
-#define BLYNK_TEMPLATE_NAME "pelatihanIOT"
-#define BLYNK_AUTH_TOKEN "VEZDqeHdrTgZKv5VMrQhVVGK_OLwBERO"
+#define BLYNK_TEMPLATE_ID ""
+#define BLYNK_TEMPLATE_NAME ""
+#define BLYNK_AUTH_TOKEN ""
 
 #include <WiFi.h>
 #include <BlynkSimpleEsp32.h>
 
 // WiFi credentials
-const char* ssid = "Lab_IoT";
-const char* password = "L@bi0t63";
+const char* ssid = "";
+const char* password = "";
 
 #define POT_PIN 34
 #define LED_PIN 25
 
 BlynkTimer timer;
+bool ledOn = false; // Status LED (nyala/mati)
 
 void readPotentiometer() {
   int potValue = analogRead(POT_PIN);                 // Baca nilai potensio
@@ -20,10 +21,17 @@ void readPotentiometer() {
   Blynk.virtualWrite(V0, potPercentage);             // Kirim ke widget Gauge
   Serial.print("Potentiometer Value: ");             // Debug di Serial Monitor
   Serial.println(potPercentage);
+  if(ledOn){
+    analogWrite(LED_PIN, map(potValue, 0,4049, 0, 255));
+  } else {
+    // Jika LED mati, pastikan LED tidak menyala
+    analogWrite(LED_PIN, 0);
+  }
 }
 
 BLYNK_WRITE(V1) {
   int ledState = param.asInt();                      // Baca nilai dari switch
+  ledOn = (ledState == 1);                          // Perbarui status LED
   digitalWrite(LED_PIN, ledState);                   // Kontrol LED
   Serial.print("LED State: ");                       // Debug di Serial Monitor
   Serial.println(ledState == HIGH ? "ON" : "OFF");
